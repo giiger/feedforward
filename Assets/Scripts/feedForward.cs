@@ -1,8 +1,6 @@
-﻿import numpy as np
-
-
-
-
+﻿/*import numpy as np
+using System;
+using System.Collections.Generic;
 
 class Neuron :
   def __init__(self, inputSize):
@@ -89,4 +87,4 @@ netLoss = mse_loss(np.array([1]), np.array(testNet.layers[3].output))
 print("output: ", netOutput)
 print("loss: ", netLoss)
 
-testNet.layers[1].neurons[0].backProp(netLoss, netOutput)
+testNet.layers[1].neurons[0].backProp(netLoss, netOutput)*/
