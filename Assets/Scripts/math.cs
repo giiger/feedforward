@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-/*public static class math
+public static class math
 {
     public static double E = 2.7182818284590451;
 
@@ -70,4 +70,4 @@ using System.Linq;
         // y_true and y_pred are numpy arrays of the same length.
         return arrPow(arrSub(y_true, y_pred), 2).Average();
     }
-}*/
+}

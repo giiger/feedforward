@@ -27,6 +27,40 @@ public class feedForward : MonoBehaviour
             return math.sigmoid(this.output);
         }
     }
+    class Layer {
+        public Layer(int size, Layer inputLayer, parent) :
+        self.neurons = []
+        self.size = size
+        self.inputLayer = inputLayer
+        self.input = []
+
+
+
+        self.parent = parent
+
+
+
+        self.output = []
+
+        for i in range(self.size):
+
+
+          self.neurons.append(Neuron(self.parent.layerSizes[self.inputLayer]))
+
+      def getInput(self):
+        self.input.clear()
+        self.input = self.parent.layerOutputs[self.inputLayer]
+
+        List<double> feedforward(self) {
+            self.getInput()
+            self.output.clear()
+
+            for i in range(0, len(self.neurons)):
+            self.output.append(self.neurons[i].feedforward(self.input))
+            print(self.output)
+                return self.output
+            }
+    }
 
     private void Start()
     {
@@ -38,37 +72,6 @@ public class feedForward : MonoBehaviour
 
 
 /*
-class Layer :
-  def __init__(self, size, inputLayer, parent):
-    self.neurons = []
-self.size = size
-self.inputLayer = inputLayer
-self.input = []
-
-self.parent = parent
-
-self.output = []
-
-    for i in range(self.size):
-
-  self.neurons.append(Neuron(self.parent.layerSizes[self.inputLayer]))
-
-  def getInput(self):
-    self.input.clear()
-    self.input = self.parent.layerOutputs[self.inputLayer]
-
-  def feedforward(self):
-    self.getInput()
-    self.output.clear()
-
-    for i in range (0, len(self.neurons)):
-      self.output.append(self.neurons[i].feedforward(self.input))
-    print(self.output)
-
-    ## Temporary
-    #self.loss = mse_loss(np.array([1]), np.array(testNet.layers[2].output))
-
-    return self.output
 
 # Holds layers
 class NeuralNetwork :
