@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-public static class math
+/*public static class math
 {
     public static double E = 2.7182818284590451;
 
@@ -33,4 +33,4 @@ public static class math
         // y_true and y_pred are numpy arrays of the same length.
         return Math.Pow(y_true - y_pred, 2).mean();
     }
-}
+}*/
