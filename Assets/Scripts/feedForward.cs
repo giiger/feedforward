@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+/*
 public class feedForward : MonoBehaviour
 {
     class Neuron
@@ -67,7 +67,7 @@ public class feedForward : MonoBehaviour
         Neuron neuron = new Neuron(2);
         Debug.Log(neuron.feedForward(new List<double> { 10, 2 }));
     }
-}
+}*/
 
 
 

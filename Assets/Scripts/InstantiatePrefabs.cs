@@ -6,26 +6,38 @@ public class InstantiatePrefabs : MonoBehaviour
 {
     public GameObject froge;
     public int frogeAmnt;
+   
 
     public void generateFroge()
     {
-        for(int ii = 0; ii < frogeAmnt; ii++)
+        for (int ii = 0; ii < frogeAmnt; ii++)
         {
-            Debug.Log("oops");
-            int frogePosX = Random.Range(-100, 100);
-            int frogePosY = Random.Range(-100, 100);
-            GameObject frogeClone = Instantiate(froge, new Vector2(frogePosX, frogePosY), Quaternion.identity);
             List<GameObject> frogeList = new List<GameObject>();
-            List<Vector3> frogePosList = new List<Vector3>();
-            frogeList.Add(frogeClone);
-            if (frogePosList.Contains(frogeClone.transform.position))
+        float frogePosX = 0;
+        float frogePosY = 0;
+
+        bool locationInvaild = true;
+        while (locationInvaild)
+        {
+            frogePosX = Random.Range(-10f, 10f);
+            frogePosY = Random.Range(-4f, 4f);
+            Vector3 currentPosition = new Vector3(frogePosX, frogePosY, 0);
+            locationInvaild = false;
+            for (int i = 0; i < frogeList.Count; i++)
             {
-                frogeClone.transform.position = new Vector2(frogePosX, frogePosY);
+                if (Vector3.Distance(frogeList[i].transform.position, currentPosition) < 2.5f * 10)
+                {
+                    locationInvaild = true;
+                    break;
+                }
             }
-            frogePosList.Add(frogeClone.transform.position);
         }
-        
-        
+            GameObject frogeClone = Instantiate(froge, new Vector3(frogePosX, frogePosY, 0), Quaternion.identity) as GameObject;
+            frogeList.Add(frogeClone);
+        }
+
+
+
     }
     void Start()
     {
