@@ -567,6 +567,7 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
+    Collab: 1
     UNet: 1
   luminIcon:
     m_Name: 
@@ -587,10 +588,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: bdf86fa6-efb2-46c8-aa22-be1cae9d8e8d
+  cloudProjectId: dbb433c7-9467-4f34-b787-98feb19a83e5
   framebufferDepthMemorylessMode: 0
-  projectName: feedforward (1)
-  organizationId: pasimko13
+  projectName: feedforward
+  organizationId: alexgiger
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
