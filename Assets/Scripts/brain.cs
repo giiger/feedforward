@@ -5,21 +5,16 @@ using UnityEngine;
 
 public class brain
 {
-    class Neuron
-    {
-        int inputSize;
-        List<Double> weights = new List<Double>();
-        Double bias = 0;
-        Double output;
+    public List<Double> inputNeurons;
+    public List<Neuron> neurons;
 
-        // Return dot product of inputs and weights
-        public Double feedForward(List<Double> input)
-        {
-            this.output = math.arrDot(input, this.weights) + this.bias;
-            return math.sigmoid(this.output);
-        }
+
+    
+    public void updateInputNeurons(List<double> newValues)
+    {
+
     }
-    public class NeuralNetwork 
+    public void addHiddenNeuron(List<int> inputNeurons) 
     {
         
     }
