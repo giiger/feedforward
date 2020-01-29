@@ -16,18 +16,18 @@ public class InstantiatePrefabs : MonoBehaviour
         float frogePosX = 0;
         float frogePosY = 0;
 
-        bool locationInvaild = true;
-        while (locationInvaild)
+        bool locationInvalid = true;
+        while (locationInvalid)
         {
             frogePosX = Random.Range(-10f, 10f);
             frogePosY = Random.Range(-4f, 4f);
             Vector3 currentPosition = new Vector3(frogePosX, frogePosY, 0);
-            locationInvaild = false;
+            locationInvalid = false;
             for (int i = 0; i < frogeList.Count; i++)
             {
                 if (Vector3.Distance(frogeList[i].transform.position, currentPosition) < 2.5f * 10)
                 {
-                    locationInvaild = true;
+                    locationInvalid = true;
                     break;
                 }
             }
