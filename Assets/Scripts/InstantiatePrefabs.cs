@@ -22,14 +22,21 @@ public class InstantiatePrefabs : MonoBehaviour
             frogePosX = Random.Range(-10f, 10f);
             frogePosY = Random.Range(-4f, 4f);
             Vector3 currentPosition = new Vector3(frogePosX, frogePosY, 0);
-            locationInvalid = false;
+            
             for (int i = 0; i < frogeList.Count; i++)
             {
                 if (Vector3.Distance(frogeList[i].transform.position, currentPosition) < 2.5f * 10)
                 {
                     locationInvalid = true;
-                    break;
                 }
+                else
+                {
+                    locationInvalid = false;
+                }
+                if(locationInvalid == true)
+                    {
+
+                    }
             }
         }
             GameObject frogeClone = Instantiate(froge, new Vector3(frogePosX, frogePosY, 0), Quaternion.identity) as GameObject;
