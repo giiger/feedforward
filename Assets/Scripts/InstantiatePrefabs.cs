@@ -17,30 +17,31 @@ public class InstantiatePrefabs : MonoBehaviour
         float frogePosY = 0;
 
         bool locationInvalid = true;
-        while (locationInvalid)
-        {
-            frogePosX = Random.Range(-10f, 10f);
-            frogePosY = Random.Range(-4f, 4f);
-            Vector3 currentPosition = new Vector3(frogePosX, frogePosY, 0);
-            
-            for (int i = 0; i < frogeList.Count; i++)
+            while (locationInvalid)
             {
-                if (Vector3.Distance(frogeList[i].transform.position, currentPosition) < 2.5f * 10)
+                frogePosX = Random.Range(-10f, 10f);
+                frogePosY = Random.Range(-4f, 4f);
+                Vector3 currentPosition = new Vector3(frogePosX, frogePosY, 0);
+                
+                for (int i = 0; i < frogeList.Count; i++)
                 {
-                    locationInvalid = true;
-                }
-                else
-                {
-                    locationInvalid = false;
-                }
-                if(locationInvalid == true)
+                    if (Vector3.Distance(frogeList[i].transform.position, currentPosition) < 2.5f * 10)
                     {
-
+                       locationInvalid = true;
                     }
+                    else
+                    {
+                        locationInvalid = false;
+                    }
+                
+                }
             }
-        }
-            GameObject frogeClone = Instantiate(froge, new Vector3(frogePosX, frogePosY, 0), Quaternion.identity) as GameObject;
-            frogeList.Add(frogeClone);
+            if(locationInvalid == false)
+            {
+                GameObject frogeClone = Instantiate(froge, new Vector3(frogePosX, frogePosY, 0), Quaternion.identity) as GameObject;
+                frogeList.Add(frogeClone);
+            }
+            
         }
 
 
