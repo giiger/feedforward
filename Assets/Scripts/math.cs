@@ -1,12 +1,17 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using System.Threading;
 
 
 public static class math
 {
     public static double E = 2.7182818284590451;
 
+    public static double GetRandomDouble(Random random, double min, double max)
+    {
+     return min + (random.NextDouble() * (max - min));
+    }
     public static List<double> arrSub(List<double> a, List<double> b)
     {
         List<double> c = new List<double>();
