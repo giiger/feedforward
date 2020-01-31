@@ -7,7 +7,7 @@ public class Genome
     List<NodeGene> nodes;
 
     void addConnection() {
-        
+
     }
     void addNode() {
 
