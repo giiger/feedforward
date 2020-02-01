@@ -7,8 +7,9 @@ using System.Threading;
 public static class math
 {
     public static double E = 2.7182818284590451;
+    private static Random random = new Random();
 
-    public static double GetRandomDouble(Random random, double min, double max)
+    public static double GetRandomDouble(double min, double max)
     {
      return min + (random.NextDouble() * (max - min));
     }

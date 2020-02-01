@@ -4,17 +4,11 @@ using System.Collections.Generic;
 public class NodeGene
 {
     int idNum;
-    public enum TYPE
-    {
-        INPUT,
-        HIDDEN,
-        OUTPUT
-    }
+    int type;
 
-    TYPE type;
-
-    public NodeGene(TYPE type, int id) {
-
+    public NodeGene(int nodeType, int id) {
+        type = nodeType;
+        idNum = id;
     }
     //nodes.Count(), math.GetRandomDouble(random, -1, 1)
 }
