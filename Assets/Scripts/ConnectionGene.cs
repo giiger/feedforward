@@ -10,16 +10,18 @@ public class ConnectionGene
     private bool enabled;
     private int innovation;
 
-    public ConnectionGene(int inNode, int outNode, double weight, int innovation)
-    {
+    public ConnectionGene(int inNode, int outNode, double weight, int innovation) {
         this.inNode = inNode;
         this.outNode = outNode;
         this.weight = weight;
         this.innovation = innovation;
     }
 
-    public void Disable()
-    {
+    public double Split() {
         enabled = false;
+        return weight;
+    }
+    public int[] getNodes() {
+        return new int[] {inNode, outNode};
     }
 }
