@@ -7,6 +7,7 @@ public class Genome
 {
     List<ConnectionGene> connections = new List<ConnectionGene>();
     List<NodeGene> nodes = new List<NodeGene>();
+    List<List<int>> connectionNodes = new List<List<int>>();
 
     /* innovation is an ID assigned to each unique connection
      * We keep a list of connections so that a preexisting connection is assigned a preexisting innovation number
@@ -33,25 +34,32 @@ public class Genome
     }
 
     // Return innovation number of pre-existing connection or return and increment innovation number
-    int connectionExists(int input, int output) {
+    private int connectionExists(int input, int output) {
         int index = allConnections.IndexOf(new List<int>{input, output});
         return index == -1 ? innovation++ : allInnovations[index];
     }
-    //Check if
-    bool connectionExistsLocal(int input, int output) {
-        //if (connections.Contains())
+    //Check if the connection has already been made inside the existing genome
+    private bool connectionExistsLocal(int input, int output) {
+        if (!connectionNodes.Contains(new List<int> {input, output})) {
+            return false;
+        }
         return false;
     }
 
     // Mutations
     // Add new connection between nodes
-    void addConnection(int input, int output, double weight) {
-        connections.Add(new ConnectionGene(input, output, weight, connectionExists(input, output)));
+    public bool addConnection(int input, int output, double weight) {
+        if (!connectionExistsLocal(input, output)) {
+            connections.Add(new ConnectionGene(input, output, weight, connectionExists(input, output)));
+            connectionNodes.Add(new List<int> {input, output});
+            return true;
+        }
+        return false;
     }
 
     // Split existing connection, adding a hidden node in the middle
     // Incoming weight is set to 1, outgoing is the same as the previous weight
-    void addNode(ConnectionGene connection) {
+    private void addNode(ConnectionGene connection) {
         double oldWeight = connection.Split();
         int[] oldConnections = connection.getNodes();
         nodes.Add(new NodeGene(1, nodes.Count));

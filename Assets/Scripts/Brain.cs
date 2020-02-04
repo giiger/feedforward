@@ -11,11 +11,14 @@ public class Brain : MonoBehaviour
     List<List<int>> initialConnections = new List<List<int>> {
         new List<int> {0,1}
     };
+    Genome genome;
 
     void Awake() {
-        Genome testGenome = new Genome(1, 2, initialConnections);
+        genome = new Genome(1, 2, initialConnections);
         // Debug.Log(testGenome.addConnection(1, 2, 3.5));
         // Debug.Log(testGenome2.addConnection(3, 4, 5));
-        Debug.Log(Genome.innovation);
+    }
+    void mutate() {
+        if (genome.addConnection())
     }
 }
