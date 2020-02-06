@@ -16,12 +16,16 @@ public class ConnectionGene
         this.weight = weight;
         this.innovation = innovation;
     }
+    public int[] getNodes() {
+        return new int[] {inNode, outNode};
+    }
 
     public double Split() {
         enabled = false;
         return weight;
     }
-    public int[] getNodes() {
-        return new int[] {inNode, outNode};
+    public double feedforward() {
+        return math.sigmoid()
     }
+
 }

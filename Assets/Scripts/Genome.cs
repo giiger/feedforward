@@ -66,4 +66,7 @@ public class Genome
         addConnection(oldConnections[0], nodes.Count-1, 1);
         addConnection(nodes.Count-1, oldConnections[1], oldWeight);
     }
+    public List<double> feedforward() {
+
+    }
 }
