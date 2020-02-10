@@ -1,80 +1,52 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class TestMove : MonoBehaviour
+public class TestMove: MonoBehaviour
 {
-    public GameObject car;
-    //change velocity to vector
-    float velocity;
+    public float maxSpeed;
+    public float acceleration;
+    public float steering;
 
-    // Update is called once per frame
-    void Update()
+    private Rigidbody2D rb;
+    private float currentSpeed;
+
+    private void Start()
     {
-        if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
-        {
-            Vector2 position = car.transform.position;
-            velocity += 0.001f;
-            position.y += velocity;
-            position.x -= 0.03f;
-            car.transform.position = position;
-        }
-        else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
-        {
-            Vector2 position = car.transform.position;
-            velocity += 0.001f;
-            position.y += velocity;
-            position.x += 0.03f;
-            car.transform.position = position;
-        }
-        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
-        {
-            Vector2 position = car.transform.position;
-            velocity -= 0.001f;
-            position.y += velocity;
-            position.x -= 0.03f;
-            car.transform.position = position;
-        }
-        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
-        {
-            Vector2 position = car.transform.position;
-            velocity -= 0.001f;
-            position.y += velocity;
-            position.x += 0.03f;
-            car.transform.position = position;
-        }
-        else if (Input.GetKey(KeyCode.W))
-        {
-            Vector2 position = car.transform.position;
-            velocity += 0.001f;
-            position.y += velocity;
-            car.transform.position = position;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            Vector2 position = car.transform.position;
-            position.x -= 0.03f;
-            car.transform.position = position;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            Vector2 position = car.transform.position;
-            velocity -= 0.001f;
-            position.y += velocity;
-            car.transform.position = position;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            Vector2 position = car.transform.position;
-            position.x += 0.03f;
-            car.transform.position = position;
-        }
-        else if(velocity != 0)
-        {
-            Vector2 position = car.transform.position;
-            position.y += velocity;
-            velocity -= 0.002f;
-            car.transform.position = position;
-        }
+        this.rb = GetComponent<Rigidbody2D>();
     }
+
+    private void FixedUpdate()
+    {
+        // Get input
+        float h = -Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+
+        // Calculate speed from input and acceleration (transform.up is forward)
+        Vector2 speed = transform.up * (v * acceleration);
+        rb.AddForce(speed);
+
+        // Create car rotation
+        float direction = Vector2.Dot(rb.velocity, rb.GetRelativeVector(Vector2.up));
+        if (direction >= 0.0f)
+        {
+            rb.rotation += h * steering * (rb.velocity.magnitude / maxSpeed);
+        }
+        else
+        {
+            rb.rotation -= h * steering * (rb.velocity.magnitude / maxSpeed);
+        }
+
+        // Change velocity based on rotation
+        float driftForce = Vector2.Dot(rb.velocity, rb.GetRelativeVector(Vector2.left)) * 2.0f;
+        Vector2 relativeForce = Vector2.right * driftForce;
+        Debug.DrawLine(rb.position, rb.GetRelativePoint(relativeForce), Color.green);
+        rb.AddForce(rb.GetRelativeVector(relativeForce));
+
+        // Force max speed limit
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
+        currentSpeed = rb.velocity.magnitude;
+    }
+
 }

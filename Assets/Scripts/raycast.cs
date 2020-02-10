@@ -19,31 +19,31 @@ public class raycast : MonoBehaviour
         if (hit.collider != null)
         {
             float distance = Mathf.Abs(hit.point.y - transform.position.y);
-            Debug.Log(distance);
-            if(distance <= 0.1f)
+            if(distance <= 0.25f)
             {
                 Debug.Log("Collision!");
                 GetComponent<TestMove>().enabled = false;
+                Destroy(this.gameObject);
             }
         }
         if (hitR.collider != null)
         {
             float distanceR = Mathf.Abs(hitR.point.x - transform.position.x);
-            Debug.Log(distanceR);
-            if (distanceR <= 0.1f)
+            if (distanceR <= 0.25f)
             {
                 Debug.Log("Collision!");
                 GetComponent<TestMove>().enabled = false;
+                Destroy(this.gameObject);
             }
         }
         if (hitL.collider != null)
         {
             float distanceL = Mathf.Abs(hitL.point.x - transform.position.x);
-            Debug.Log(distanceL);
-            if (distanceL <= 0.1f)
+            if (distanceL <= 0.25f)
             {
                 Debug.Log("Collision!");
                 GetComponent<TestMove>().enabled = false;
+                Destroy(this.gameObject);
             }
         }
     }
