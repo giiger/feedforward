@@ -2,51 +2,58 @@
 
 public class TestMove: MonoBehaviour
 {
-    public float maxSpeed;
-    public float acceleration;
-    public float steering;
-
-    private Rigidbody2D rb;
-    private float currentSpeed;
-
-    private void Start()
+    public float power = 3;
+    public float maxspeed = 5;
+    public float turnpower = 2;
+    public float friction = 2;
+    private Vector2 curspeed;
+    private Vector3 myVel;
+    Rigidbody2D rigidbody2D;
+    
+    void Start()
     {
-        this.rb = GetComponent<Rigidbody2D>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        myVel = new Vector3(0,0,0);
     }
 
-    private void FixedUpdate()
+
+    void FixedUpdate()
     {
-        // Get input
-        float h = -Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        curspeed = new Vector2(rigidbody2D.velocity.x, rigidbody2D.velocity.y);
 
-        // Calculate speed from input and acceleration (transform.up is forward)
-        Vector2 speed = transform.up * (v * acceleration);
-        rb.AddForce(speed);
-
-        // Create car rotation
-        float direction = Vector2.Dot(rb.velocity, rb.GetRelativeVector(Vector2.up));
-        if (direction >= 0.0f)
+        if (curspeed.magnitude > maxspeed)
         {
-            rb.rotation += h * steering * (rb.velocity.magnitude / maxSpeed);
-        }
-        else
-        {
-            rb.rotation -= h * steering * (rb.velocity.magnitude / maxSpeed);
+            curspeed = curspeed.normalized;
+            curspeed *= maxspeed;
         }
 
-        // Change velocity based on rotation
-        float driftForce = Vector2.Dot(rb.velocity, rb.GetRelativeVector(Vector2.left)) * 2.0f;
-        Vector2 relativeForce = Vector2.right * driftForce;
-        Debug.DrawLine(rb.position, rb.GetRelativePoint(relativeForce), Color.green);
-        rb.AddForce(rb.GetRelativeVector(relativeForce));
-
-        // Force max speed limit
-        if (rb.velocity.magnitude > maxSpeed)
+        if (Input.GetKey(KeyCode.W))
         {
-            rb.velocity = rb.velocity.normalized * maxSpeed;
+            float currentspeed = myVel.magnitude;
+            myVel.Normalize();
+            myVel *= currentspeed + power;
+
+            rigidbody2D.drag = friction;
         }
-        currentSpeed = rb.velocity.magnitude;
+        if (Input.GetKey(KeyCode.S))
+        {
+            if (curspeed.x > 0)
+            {
+                rigidbody2D.AddForce(-(transform.up) * (power / 2));
+            }
+            rigidbody2D.drag = friction;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.Rotate(Vector3.forward * turnpower);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Rotate(Vector3.forward * -turnpower);
+        }
+
+        transform.position += myVel;
     }
+    
 
 }
