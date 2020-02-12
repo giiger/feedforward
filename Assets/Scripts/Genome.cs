@@ -15,8 +15,9 @@ public class Genome
      * I am sure there is a better way to do this
     */
     public static int innovation = 0;
-    public static List<List<int>> allConnections = new List<List<int>>();
-    public static List<int> allInnovations = new List<int>();
+    // Adjacency matrix with relevant innovation number at existing connection index
+    // [input node][output node] = innovation number
+    public static List<List<int>> adjacency = new List<List<int>>();
 
     public Genome(int inputSize, int outputSize, List<List<int>> connections) {
         // Add input nodes
@@ -30,6 +31,19 @@ public class Genome
         // Add initial connections
         for (int i = 0; i < connections.Count; i ++) {
             addConnection(connections[i][0], connections[i][1], math.GetRandomDouble(-1, 1));
+        }
+    }
+
+    private List<List<int>> updateAdjacency(int innovation = null) {
+        if (input > adjacency.Count()) {
+            for (int i = adjacency.Count()-1; i < output) {
+                adjacency.push(new List<int>);
+            }
+            for (int i = 0; i < adjacency.Count(); i ++) {
+                while (adjacency[i].Count() < input) {
+                    adjacency[i].Add(null);
+                }
+            }
         }
     }
 
@@ -65,8 +79,5 @@ public class Genome
         nodes.Add(new NodeGene(1, nodes.Count));
         addConnection(oldConnections[0], nodes.Count-1, 1);
         addConnection(nodes.Count-1, oldConnections[1], oldWeight);
-    }
-    public List<double> feedforward() {
-
     }
 }

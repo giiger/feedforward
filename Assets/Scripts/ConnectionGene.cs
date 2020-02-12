@@ -25,7 +25,8 @@ public class ConnectionGene
         return weight;
     }
     public double feedforward() {
-        return math.sigmoid()
+        return 1;
+        //return math.sigmoid()
     }
 
 }

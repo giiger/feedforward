@@ -19,6 +19,6 @@ public class Brain : MonoBehaviour
         // Debug.Log(testGenome2.addConnection(3, 4, 5));
     }
     void mutate() {
-        if (genome.addConnection())
+        //if (genome.addConnection())
     }
 }
