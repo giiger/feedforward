@@ -7,7 +7,8 @@ public class Genome
 {
     List<ConnectionGene> connections = new List<ConnectionGene>();
     List<NodeGene> nodes = new List<NodeGene>();
-    List<List<int>> connectionNodes = new List<List<int>>();
+    //List of nodes
+    List<List<int>> connectionNodeIDs = new List<List<int>>();
 
     /* innovation is an ID assigned to each unique connection
      * We keep a list of connections so that a preexisting connection is assigned a preexisting innovation number
@@ -18,6 +19,9 @@ public class Genome
     // Adjacency matrix with relevant innovation number at existing connection index
     // [input node][output node] = innovation number
     public static List<List<int>> adjacency = new List<List<int>>();
+    // Same adjacency matrix for connection weights
+    List<List<float>> localAdjacency = new List<List<float>>();
+
 
     public Genome(int inputSize, int outputSize, List<List<int>> connections) {
         // Add input nodes
@@ -34,30 +38,9 @@ public class Genome
         }
     }
 
-    private List<List<int>> updateAdjacency(int innovation = null) {
-        if (input > adjacency.Count()) {
-            for (int i = adjacency.Count()-1; i < output) {
-                adjacency.push(new List<int>);
-            }
-            for (int i = 0; i < adjacency.Count(); i ++) {
-                while (adjacency[i].Count() < input) {
-                    adjacency[i].Add(null);
-                }
-            }
-        }
-    }
-
-    // Return innovation number of pre-existing connection or return and increment innovation number
-    private int connectionExists(int input, int output) {
-        int index = allConnections.IndexOf(new List<int>{input, output});
-        return index == -1 ? innovation++ : allInnovations[index];
-    }
-    //Check if the connection has already been made inside the existing genome
-    private bool connectionExistsLocal(int input, int output) {
-        if (!connectionNodes.Contains(new List<int> {input, output})) {
-            return false;
-        }
-        return false;
+    // Update adjacency arrays and return innovation number
+    private int updateAdjacencies(int input, int output) {
+        if ()
     }
 
     // Mutations
@@ -65,7 +48,7 @@ public class Genome
     public bool addConnection(int input, int output, double weight) {
         if (!connectionExistsLocal(input, output)) {
             connections.Add(new ConnectionGene(input, output, weight, connectionExists(input, output)));
-            connectionNodes.Add(new List<int> {input, output});
+            connectionNodeIDs.Add(new List<int> {input, output});
             return true;
         }
         return false;

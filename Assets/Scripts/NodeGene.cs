@@ -6,6 +6,7 @@ public class NodeGene
     int idNum;
     int type;
     int node;
+    List<NodeGene> inputs = new List<NodeGene>();
 
     public NodeGene(int nodeType, int id) {
         type = nodeType;
