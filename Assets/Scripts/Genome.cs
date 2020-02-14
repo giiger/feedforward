@@ -22,7 +22,6 @@ public class Genome
     // Same adjacency matrix for connection weights
     List<List<float>> localAdjacency = new List<List<float>>();
 
-
     public Genome(int inputSize, int outputSize, List<List<int>> connections) {
         // Add input nodes
         for (int i = 0; i < inputSize; i ++) {
@@ -40,14 +39,29 @@ public class Genome
 
     // Update adjacency arrays and return innovation number
     private int updateAdjacencies(int input, int output) {
-        if ()
+        return adjacency[input][output] == null ? innovation++ : adjacency[input][output];
+    }
+    private bool checkValid(int input, int output) {
+        // If connection or reversed connection exists
+        if (localAdjacency[input][output] != null || localAdjacency[output][input] != null) {
+            return false;
+        }
+    }
+
+    //feedforward the network
+    List<double> calculate() {
+        for (int i = 0; i < nodes.Count(); i ++) {
+            if (!nodes[i].done) {
+                nodes[i].getOutput();
+            }
+        }
     }
 
     // Mutations
     // Add new connection between nodes
     public bool addConnection(int input, int output, double weight) {
         if (!connectionExistsLocal(input, output)) {
-            connections.Add(new ConnectionGene(input, output, weight, connectionExists(input, output)));
+            connections.Add(new ConnectionGene(input, output, weight, updateAdjacencies(input, output)));
             connectionNodeIDs.Add(new List<int> {input, output});
             return true;
         }
