@@ -2,46 +2,45 @@
 
 public class TestMove: MonoBehaviour
 {
-    public float power = 3;
-    public float maxspeed = 5;
     public float turnpower = 2;
-    public float friction = 2;
-    private Vector2 curspeed;
     private Vector3 myVel;
-    Rigidbody2D rigidbody2D;
-    
+    private Vector3 acceleration;
+    private float maxSpeed = 0.1f;
     void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
-        myVel = new Vector3(0,0,0);
+        myVel = new Vector3(0, 0, 0);
+        acceleration = new Vector3(0, 0, 0);
     }
 
 
     void FixedUpdate()
     {
-        curspeed = new Vector2(rigidbody2D.velocity.x, rigidbody2D.velocity.y);
-
-        if (curspeed.magnitude > maxspeed)
-        {
-            curspeed = curspeed.normalized;
-            curspeed *= maxspeed;
-        }
 
         if (Input.GetKey(KeyCode.W))
         {
             float currentspeed = myVel.magnitude;
             myVel.Normalize();
-            myVel *= currentspeed + power;
-
-            rigidbody2D.drag = friction;
+            transform.Translate(0, acceleration.y, 0);
+            if (myVel.magnitude <= maxSpeed)
+            {
+                acceleration.y += 0.001f;
+            }
         }
+            
+            
+        
         if (Input.GetKey(KeyCode.S))
         {
-            if (curspeed.x > 0)
+            
+            float currentspeed = myVel.magnitude;
+            myVel.Normalize();
+            transform.Translate(0, acceleration.y, 0);
+            if(acceleration.y >= -2 *maxSpeed)
             {
-                rigidbody2D.AddForce(-(transform.up) * (power / 2));
+                acceleration.y -= 0.001f;
             }
-            rigidbody2D.drag = friction;
+            
+            
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -53,6 +52,24 @@ public class TestMove: MonoBehaviour
         }
 
         transform.position += myVel;
+        gas();
+    }
+    void gas()
+    {
+        if(!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
+        {
+            if(acceleration.y >= 0)
+            {
+                transform.Translate(0, acceleration.y, 0);
+                acceleration.y -= 0.0005f;
+            }
+            else if (acceleration.y <= 0)
+            {
+                transform.Translate(0, acceleration.y, 0);
+                acceleration.y += 0.0005f;
+            }
+
+        }
     }
     
 
