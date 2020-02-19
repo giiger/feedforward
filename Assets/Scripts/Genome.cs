@@ -18,9 +18,10 @@ public class Genome
     public static int innovation = 0;
     // Adjacency matrix with relevant innovation number at existing connection index
     // [input node][output node] = innovation number
-    public static List<List<int>> adjacency = new List<List<int>>();
-    // Same adjacency matrix for connection weights
-    List<List<float>> localAdjacency = new List<List<float>>();
+    public static List<List<int?>> adjacency = new List<List<int?>>();
+
+    // Another adjacency matrix for local connections
+    List<List<double?>> localAdjacency = new List<List<double?>>();
 
     public Genome(int inputSize, int outputSize, List<List<int>> connections) {
         // Add input nodes
@@ -38,13 +39,29 @@ public class Genome
     }
 
     // Update adjacency arrays and return innovation number
-    private int updateAdjacencies(int input, int output) {
+    private int? updateAdjacencies(int input, int output) {
         return adjacency[input][output] == null ? innovation++ : adjacency[input][output];
     }
+    // Check if connection is possible
     private bool checkValid(int input, int output) {
-        // If connection or reversed connection exists
+        // If connection or reversed connection exists already: return false
         if (localAdjacency[input][output] != null || localAdjacency[output][input] != null) {
             return false;
+        }
+        bool[] nodeIsBacktracing = new bool[localAdjacency.Count()];
+        localAdjacency[input][output] = 0;
+        for (int i = 0; i < localAdjacency.Count(); i ++) {
+            return backtrace(i);
+        }
+    }
+    private bool backtrace(int node) {
+        for (int i = 0; i < localAdjacency[node].Count(); i ++) {
+            if (localAdjacency[node][i] == 0) {
+                backtrace(i);
+            }
+            if (localAdjacency[node][i] == 1) {
+                return false;
+            }
         }
     }
 
@@ -66,6 +83,9 @@ public class Genome
             return true;
         }
         return false;
+    }
+    public void pruneConnection(int input, int output) {
+
     }
 
     // Split existing connection, adding a hidden node in the middle

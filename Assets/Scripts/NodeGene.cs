@@ -16,11 +16,9 @@ public class NodeGene
         Used for the feedforward
         If we are getting the inputs for a node, we
         are in that node's "bubble"
-        If this list contains the same ID twice, we have
-        a circular structure and should prune the most
-        recent connection
+        If an input's bubble property is true, prune the newest connection
     */
-    public static List<int> bubble;
+    public bool bubble = false;
 
     public NodeGene(int nodeType, int id) {
         type = nodeType;
@@ -31,13 +29,17 @@ public class NodeGene
         return idNum;
     }
 
-    public getOutput() {
-        for (int i = 0; i < inputs.length; i ++) {
+    public bool getOutput() {
+        bubble = true;
+        for (int i = 0; i < inputs.Count(); i ++) {
             if (!inputs[i].done) {
+                if (inputs[i].bubble) {
+                    return false;
+                }
                 inputs[i].getOutput();
             }
         }
-        //Working here
+        bubble = false;
         List<double> inputValues = inputs.Select(o => o.value).ToList();
         value = math.arrDot(inputValues);
     }
