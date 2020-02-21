@@ -26,7 +26,7 @@ public class ConnectionGene
     }
     public double feedforward() {
         return 1;
-        //return math.sigmoid()
+
     }
 
 }

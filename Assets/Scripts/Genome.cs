@@ -6,7 +6,6 @@ using System.Linq;
 
 public class Genome
 {
-    List<ConnectionGene> connections = new List<ConnectionGene>();
     List<NodeGene> nodes = new List<NodeGene>();
     int inputNum = 0;
     int outputNum = 0;
@@ -22,6 +21,8 @@ public class Genome
 
     // Another adjacency matrix for local connections
     List<List<double?>> localAdjacency = new List<List<double?>>();
+    // Adjacency list without null values used for dot product
+    List<List<double>> weights = new List<List<double>>();
 
     // Used when checking for circular connections
     List<bool> nodeIsBacktracing = new List<bool>();
@@ -79,12 +80,13 @@ public class Genome
     }
     // Called from node
     public static double calcNode(int id) {
-        List<double> weights =
-        return math.arrDot()
+        //return math.arrDot(nodes, );
+        return 2;
     }
 
     //feedforward the network
     List<double> calculate() {
+        //todo Get inputs
         List<double> output = new List<double>();
         for (int i = inputNum; i < outputNum; i ++) {
             output.Add(nodes[i].getOutput());
@@ -113,5 +115,8 @@ public class Genome
         nodes.Add(new NodeGene(1, nodes.Count));
         addConnection(oldConnections[0], nodes.Count-1, 1);
         addConnection(nodes.Count-1, oldConnections[1], oldWeight);
+    }
+    private void updateWeights() {
+        weights = localAdjacency.Where(c => c != null).ToArray();
     }
 }

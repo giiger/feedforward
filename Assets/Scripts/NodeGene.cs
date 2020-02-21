@@ -27,7 +27,7 @@ public class NodeGene
                     inputs[i].getOutput();
                 }
             }
-            value = genome.calcNode(idNum);
+            value = Genome.calcNode(idNum);
         }
     }
 
