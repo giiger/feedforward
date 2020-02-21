@@ -7,7 +7,7 @@ public class Brain : MonoBehaviour
 {
     int inputs = 3;
     int outputs = 2;
-    // If some connections should definitely exist, they may be initialized here
+    // If some connections should exist before evolving, they may be initialized here
     List<List<int>> initialConnections = new List<List<int>> {
         new List<int> {0,1}
     };
