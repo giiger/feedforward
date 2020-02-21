@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using System.Threading;
+using System.Linq;
 
 public class Genome
 {
@@ -21,6 +22,9 @@ public class Genome
 
     // Another adjacency matrix for local connections
     List<List<double?>> localAdjacency = new List<List<double?>>();
+
+    // Used when checking for circular connections
+    List<bool> nodeIsBacktracing = new List<bool>();
 
     public Genome(int inputSize, int outputSize, List<List<int>> connections) {
         // Add input nodes
@@ -45,12 +49,12 @@ public class Genome
     }
     // Check if connection is possible
     private bool checkValid(int input, int output) {
+        nodeIsBacktracing = Enumerable.Repeat(false, localAdjacency.Count).ToList();
         // If connection or reversed connection exists already: return false
         if (localAdjacency[input][output] != null || localAdjacency[output][input] != null) {
             return false;
         }
 
-        List<bool> nodeIsBacktracing = new List<bool>(localAdjacency.Count);
         localAdjacency[input][output] = 0;
 
         for (int i = inputNum; i < outputNum; i ++) {
@@ -73,20 +77,25 @@ public class Genome
         }
         return true;
     }
+    // Called from node
+    public static double calcNode(int id) {
+        List<double> weights =
+        return math.arrDot()
+    }
 
     //feedforward the network
     List<double> calculate() {
-        for (int i = 0; i < nodes.Count; i ++) {
-            if (!nodes[i].done) {
-                nodes[i].getOutput();
-            }
+        List<double> output = new List<double>();
+        for (int i = inputNum; i < outputNum; i ++) {
+            output.Add(nodes[i].getOutput());
         }
+        return output;
     }
 
     // Mutations
     // Add new connection between nodes
     public bool addConnection(int input, int output, double weight) {
-        if (!connectionExistsLocal(input, output)) {
+        if (!checkValid(input, output)) {
             connections.Add(new ConnectionGene(input, output, weight, updateAdjacencies(input, output)));
             return true;
         }
