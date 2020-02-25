@@ -15,17 +15,19 @@ public class Genome
      * Once we get the index of the preexisting connection, we match it to this array
     */
     public static int innovation = 0;
+
     // Adjacency matrix with relevant innovation number at existing connection index
     // [input node][output node] = innovation number
     public static List<List<int?>> adjacency = new List<List<int?>>();
 
     // Another adjacency matrix for local connections
-    List<List<double?>> localAdjacency = new List<List<double?>>();
+    List<List<ConnectionGene?>> localAdjacency = new List<List<ConnectionGene?>>();
+
     // Adjacency list without null values used for dot product
     List<List<double>> weights = new List<List<double>>();
 
-    // Used when checking for circular connections
-    List<bool> nodeIsBacktracing = new List<bool>();
+    // Used when checking for circular structure
+    List<bool> connectionIsBacktracing = new List<bool>();
 
     public Genome(int inputSize, int outputSize, List<List<int>> connections) {
         // Add input nodes
@@ -50,23 +52,29 @@ public class Genome
     }
     // Check if connection is possible
     private bool checkValid(int input, int output) {
-        nodeIsBacktracing = Enumerable.Repeat(false, localAdjacency.Count).ToList();
         // If connection or reversed connection exists already: return false
         if (localAdjacency[input][output] != null || localAdjacency[output][input] != null) {
             return false;
         }
+        // Reset backtracing list
+        connectionIsBacktracing.Clear();
+        for (int i = 0; i < localAdjacency.Count; i ++) {
+            connectionIsBacktracing.Add(new List<bool>());
+            for (int j = 0; j < localAdjacency[i].Count; j ++) {
+                connectionIsBacktracing[i].Add(false);
+            }
+        }
 
-        localAdjacency[input][output] = 0;
-
-        for (int i = inputNum; i < outputNum; i ++) {
-            if (!backtrace(i)) {
+        //
+        for (int j = inputNum; j < outputNum; j ++) {
+            if (!backtrace(j)) {
                 return false;
             }
         }
         return true;
     }
 
-    private bool backtrace(int node) {
+    private bool backtrace(int in, int out) {
         if (nodeIsBacktracing[node]) {
             return false;
         }
@@ -77,11 +85,6 @@ public class Genome
             }
         }
         return true;
-    }
-    // Called from node
-    public static double calcNode(int id) {
-        //return math.arrDot(nodes, );
-        return 2;
     }
 
     //feedforward the network
@@ -103,9 +106,6 @@ public class Genome
         }
         return false;
     }
-    public void pruneConnection(int input, int output) {
-
-    }
 
     // Split existing connection, adding a hidden node in the middle
     // Incoming weight is set to 1, outgoing is the same as the previous weight
@@ -115,8 +115,5 @@ public class Genome
         nodes.Add(new NodeGene(1, nodes.Count));
         addConnection(oldConnections[0], nodes.Count-1, 1);
         addConnection(nodes.Count-1, oldConnections[1], oldWeight);
-    }
-    private void updateWeights() {
-        weights = localAdjacency.Where(c => c != null).ToArray();
     }
 }

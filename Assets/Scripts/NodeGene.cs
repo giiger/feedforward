@@ -32,7 +32,7 @@ public class NodeGene
     }
 
     //Use for input nodes
-    public double assignValue(double newValue) {
+    public void assignValue(double newValue) {
         value = newValue;
         done = true;
     }
