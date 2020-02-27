@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class raycast : MonoBehaviour
 {
@@ -20,9 +21,25 @@ public class raycast : MonoBehaviour
         Debug.DrawRay(transform.position, left, Color.green);
         Debug.DrawRay(transform.position, right, Color.green);
 
-        if (hit.collider != null)
+        float distance = Mathf.Abs(hit.point.y - transform.position.y);
+        List<string> checkpoints = new List<string> { "checkpoint 1", "checkpoint 2", "checkpoint 3", "checkpoint 4", "checkpoint 5", "checkpoint 6", "checkpoint 7", "checkpoint 8", "checkpoint 9", "checkpoint 10", "checkpoint 11", "checkpoint 12", "checkpoint 13", "checkpoint 14", "checkpoint 15", "checkpoint 16", "checkpoint 17", "checkpoint 18", "checkpoint 19", "checkpoint 20", "checkpoint 21", "checkpoint 22", "checkpoint 23" };
+
+        foreach (var chpnt in checkpoints)
         {
-            float distance = Mathf.Abs(hit.point.y - transform.position.y);
+            if (hit.collider.name.Equals(chpnt))
+            {
+                if (distance <= 0.25f)
+                {
+                    Debug.Log("cleared" + hit.collider.name);
+                }
+                Debug.Log("hit " + chpnt);
+                break;
+            }   
+        }
+        if (hit.collider != null && hit.collider.name.Equals(checkpoints))
+        {
+            
+            
             
             if(distance <= 0.25f)
             {
@@ -38,7 +55,7 @@ public class raycast : MonoBehaviour
         if (hitR.collider != null)
         {
             float distanceR = Mathf.Abs(hitR.point.x - transform.position.x);
-            Debug.Log(rDir + "r");
+            
             if (distanceR <= 0.25f)
             {
                 Debug.Log("Collision!");
@@ -53,7 +70,7 @@ public class raycast : MonoBehaviour
         if (hitL.collider != null)
         {
             float distanceL = Mathf.Abs(hitL.point.x - transform.position.x);
-            Debug.Log(lDir + "l");
+            
             if (distanceL <= 0.25f)
             {
                 Debug.Log("Collision!");
@@ -65,5 +82,9 @@ public class raycast : MonoBehaviour
                 Debug.DrawRay(transform.position, left, Color.yellow);
             }
         }
+        
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
     }
 }
