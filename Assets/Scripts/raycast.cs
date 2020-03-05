@@ -7,6 +7,7 @@ public class raycast : MonoBehaviour
 {
     void FixedUpdate()
     {
+        
         int currentCheckpoint = 0;
         bool cleared = false;
         int clearedOnce = 0;
@@ -95,7 +96,8 @@ public class raycast : MonoBehaviour
         }
         
     }
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("cleared" + collision);
     }
 }
