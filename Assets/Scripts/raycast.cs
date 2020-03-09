@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class raycast : MonoBehaviour
 {
+    public int clearedCheckpoints = 0;
     void FixedUpdate()
     {
-        
         int currentCheckpoint = 0;
         bool cleared = false;
         int clearedOnce = 0;
@@ -99,5 +99,10 @@ public class raycast : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("cleared" + collision);
+        if (collision.counted == false)
+        {
+            clearedCheckpoints++;
+            collision.counted = true;
+        }
     }
 }
