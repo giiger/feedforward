@@ -15,9 +15,12 @@ public class NodeGene
         type = nodeType;
         idNum = id;
     }
-    //nodes.Count(), math.GetRandomDouble(random, -1, 1)
+
     public int getID() {
         return idNum;
+    }
+    public int getType() {
+        return type;
     }
 
     public void getOutput() {
