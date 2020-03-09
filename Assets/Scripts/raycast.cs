@@ -5,21 +5,19 @@ using UnityEngine.UI;
 
 public class raycast : MonoBehaviour
 {
-    public int FrontRaycastLength = 2, SideRaycastLength = 1, numOfRays = 3, startDirection = 80;
+    public float FrontRaycastLength = 2, SideRaycastLength = 1, numOfRays = 3, startDirection = 80;
 
     private Vector2[] vectors;
 
     private RaycastHit2D[] hits;
 
-    private int rotateBy;
+    private float rotateBy;
 
     void Start() {
-        vectors = new Vector2[numOfRays];
-        hits = new RaycastHit2D[numOfRays];
+        vectors = new Vector2[(int) numOfRays];
+        hits = new RaycastHit2D[(int) numOfRays];
 
         rotateBy = (180 - 2 * (90 - startDirection)) / (numOfRays - 1);
-        
-        
     }
 
     void FixedUpdate()
@@ -28,14 +26,22 @@ public class raycast : MonoBehaviour
         //bool cleared = false;
         //int clearedOnce = 0;
         if (numOfRays % 2 == 1) {
-            for (int i = 0; i < numOfRays && i >= 0; i++) {
-                vectors[i] = Quaternion.Euler(0, 0, transform.rotation.z + i * rotateBy - startDirection) * transform.up * FrontRaycastLength;
+            for (int i = 0; i < numOfRays; i++) {
+
+                if (i < numOfRays / 2) {
+                    vectors[i] = Quaternion.Euler(0, 0, transform.rotation.z + i * rotateBy - startDirection) * transform.up * (SideRaycastLength + i * (FrontRaycastLength - SideRaycastLength) / ((int) numOfRays / 2));
+                } else {
+                    vectors[i] = Quaternion.Euler(0, 0, transform.rotation.z + i * rotateBy - startDirection) * transform.up * (FrontRaycastLength + (((int) numOfRays / 2) - i) * (FrontRaycastLength - SideRaycastLength) / ((int)numOfRays / 2));
+                }
+
+                print(vectors[i].magnitude);
             }
         }
+        print("");
         for (int i = 0; i < numOfRays; i++) {
             hits[i] = Physics2D.Raycast(transform.position, vectors[i]);
             if (hits[i].collider.gameObject.name == "Road Outline(outer)" || hits[i].collider.gameObject.name == "Road Outline(inner)") {
-                print("Hit! Ray: " + (i + 1).ToString() + " Dist: " + hits[i].distance.ToString());
+                //print("Hit! Ray: " + (i + 1).ToString() + " Dist: " + hits[i].distance.ToString());
                 Debug.DrawRay(transform.position, vectors[i], Color.red);
             } else {
                 Debug.DrawRay(transform.position, vectors[i], Color.green);
