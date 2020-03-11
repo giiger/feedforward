@@ -32,21 +32,8 @@ public class raycast : MonoBehaviour
                     vectors[i] = Quaternion.Euler(0, 0, transform.rotation.z + i * rotateBy - startDirection) * transform.up * (SideRaycastLength + i * (FrontRaycastLength - SideRaycastLength) / ((int) numOfRays / 2));
                 } else {
                     vectors[i] = Quaternion.Euler(0, 0, transform.rotation.z + i * rotateBy - startDirection) * transform.up * (FrontRaycastLength + (((int) numOfRays / 2) - i) * (FrontRaycastLength - SideRaycastLength) / ((int)numOfRays / 2));
-                }
 
-                print(vectors[i].magnitude);
-            }
-        }
-        print("");
-        for (int i = 0; i < numOfRays; i++) {
-            hits[i] = Physics2D.Raycast(transform.position, vectors[i]);
-            if (hits[i].collider.gameObject.name == "Road Outline(outer)" || hits[i].collider.gameObject.name == "Road Outline(inner)") {
-                //print("Hit! Ray: " + (i + 1).ToString() + " Dist: " + hits[i].distance.ToString());
-                Debug.DrawRay(transform.position, vectors[i], Color.red);
-            } else {
-                Debug.DrawRay(transform.position, vectors[i], Color.green);
-            }
-        }
+    
 
 
         //float distance = Mathf.Abs(hitF.point.y - transform.position.y);
@@ -83,6 +70,7 @@ public class raycast : MonoBehaviour
         //    }
         //}
 
+        
     }
     //List<string> checkpoints = new List<string> { "checkpoint 1", "checkpoint 2", "checkpoint 3", "checkpoint 4", "checkpoint 5", "checkpoint 6", "checkpoint 7", "checkpoint 8", "checkpoint 9", "checkpoint 10", "checkpoint 11", "checkpoint 12", "checkpoint 13", "checkpoint 14", "checkpoint 15", "checkpoint 16", "checkpoint 17", "checkpoint 18", "checkpoint 19", "checkpoint 20", "checkpoint 21", "checkpoint 22", "checkpoint 23" };
 
