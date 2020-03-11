@@ -63,4 +63,7 @@ public static class math
         // y_true and y_pred are numpy arrays of the same length.
         return arrPow(arrSub(y_true, y_pred), 2).Average();
     }
+    public static double tanh(double x) {
+        return 2*sigmoid(2*x)-1;
+    }
 }

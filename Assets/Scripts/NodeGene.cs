@@ -25,13 +25,11 @@ public class NodeGene
     }
 
     public double getOutput() {
-        if (type != 0) {
+        if (type != 0 && !done) {
             for (int i = 0; i < inputs.Count; i ++) {
-                if (!inputs[i].done) {
-                    inputValues.Add(inputs[i].getOutput());
-                }
+                inputValues.Add(inputs[i].getOutput());
             }
-            value = math.arrDot(inputValues, weights);
+            value = math.tanh(math.arrDot(inputValues, weights));
             done = true;
         }
         return value;
@@ -39,7 +37,7 @@ public class NodeGene
 
     //Use for input nodes
     public void assignValue(double newValue) {
-        value = newValue;
+        value = math.tanh(newValue);
         done = true;
     }
 

@@ -16,7 +16,7 @@ public class ConnectionGene
         this.outNode = outNode;
         this.weight = weight;
         this.innovation = innovation;
-        outNode.inputs.Add(outNode);
+        outNode.inputs.Add(inNode);
         outNode.weights.Add(weight);
     }
 }

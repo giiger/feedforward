@@ -9,7 +9,7 @@ public class Brain : MonoBehaviour
     int outputs = 3;
     // If some connections should exist before evolving, they may be initialized here
     List<List<int>> initialConnections = new List<List<int>> {
-        new List<int> {0,3},
+        new List<int> {0,2},
         new List<int> {1,3},
         new List<int> {1,4}
     };
@@ -17,9 +17,13 @@ public class Brain : MonoBehaviour
 
     void Awake() {
         genome = new Genome(inputs, outputs, initialConnections);
-        getOutput();
+        List<double> output = getOutput();
+        for (int i = 0; i < output.Count; i ++) {
+            Debug.Log(output[i]);
+        }
     }
-    void getOutput() {
-        Debug.Log(genome.feedforward()[0]);
+    List<double> getOutput() {
+        List<double> output = genome.feedforward();
+        return output;
     }
 }

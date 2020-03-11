@@ -83,7 +83,7 @@ public class Genome {
 
     public List<double> feedforward() {
         List<double> output = new List<double>();
-        for (int i = localNodes.Count-outputCount; i < localNodes.Count; i ++) {
+        for (int i = inputCount; i < outputCount+inputCount; i ++) {
             output.Add(localNodes[i].getOutput());
         }
         return output;
