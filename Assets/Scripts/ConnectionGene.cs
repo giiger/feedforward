@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using UnityEngine;
 
 public class ConnectionGene
 {
@@ -15,5 +16,7 @@ public class ConnectionGene
         this.outNode = outNode;
         this.weight = weight;
         this.innovation = innovation;
+        outNode.inputs.Add(outNode);
+        outNode.weights.Add(weight);
     }
 }

@@ -20,6 +20,7 @@ public class Genome {
         // Add input nodes
         for (int i = 0; i < inputSize; i ++) {
             addNode(0);
+            localNodes[i].assignValue(2);
             inputCount++;
         }
         // Add output nodes
@@ -55,6 +56,7 @@ public class Genome {
     private void addConnection(int inNode, int outNode, double weight) {
         if (checkConnection(inNode, outNode)) {
             localConnections[inNode][outNode] = new ConnectionGene(localNodes[inNode], localNodes[outNode], weight, innovation);
+            innovation++;
         }
     }
 
@@ -79,4 +81,11 @@ public class Genome {
         }
     }
 
+    public List<double> feedforward() {
+        List<double> output = new List<double>();
+        for (int i = localNodes.Count-outputCount; i < localNodes.Count; i ++) {
+            output.Add(localNodes[i].getOutput());
+        }
+        return output;
+    }
 }

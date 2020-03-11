@@ -17,8 +17,9 @@ public class Brain : MonoBehaviour
 
     void Awake() {
         genome = new Genome(inputs, outputs, initialConnections);
+        getOutput();
     }
     void getOutput() {
-        
+        Debug.Log(genome.feedforward()[0]);
     }
 }
