@@ -10,7 +10,7 @@ public class ConnectionGene
     private bool enabled;
     private int innovation;
 
-    public ConnectionGene(int inNode, int outNode, double weight, int innovation) {
+    public ConnectionGene(NodeGene inNode, NodeGene outNode, double weight, int innovation) {
         this.inNode = inNode;
         this.outNode = outNode;
         this.weight = weight;

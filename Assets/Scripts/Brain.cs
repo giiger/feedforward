@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 public class Brain : MonoBehaviour
 {
-    int inputs = 3;
-    int outputs = 2;
+    int inputs = 2;
+    int outputs = 3;
     // If some connections should exist before evolving, they may be initialized here
     List<List<int>> initialConnections = new List<List<int>> {
-        new List<int> {0,1}
+        new List<int> {0,3},
+        new List<int> {1,3},
+        new List<int> {1,4}
     };
     Genome genome;
 
     void Awake() {
-        genome = new Genome(1, 2, initialConnections);
-        // Debug.Log(testGenome.addConnection(1, 2, 3.5));
-        // Debug.Log(testGenome2.addConnection(3, 4, 5));
+        genome = new Genome(inputs, outputs, initialConnections);
     }
-    void mutate() {
-        //if (genome.addConnection())
+    void getOutput() {
+        
     }
 }

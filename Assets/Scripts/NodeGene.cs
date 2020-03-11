@@ -30,7 +30,7 @@ public class NodeGene
                     inputs[i].getOutput();
                 }
             }
-            value = Genome.calcNode(idNum);
+            //value = Genome.calcNode(idNum);
         }
     }
 

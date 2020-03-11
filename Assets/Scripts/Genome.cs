@@ -3,22 +3,29 @@ using System.Collections.Generic;
 using System;
 using System.Threading;
 using System.Linq;
+using UnityEngine;
 
 public class Genome {
-    private List<List<ConnectionGene?>> localConnections = new List<List<ConnectionGene>>();
-    private List<NodeGene?> localNodes = new List<NodeGene>();
+    private List<List<ConnectionGene>> localConnections = new List<List<ConnectionGene>>();
+    private List<NodeGene> localNodes = new List<NodeGene>();
 
     private List<List<bool?>> connectionsAsBools;
+
+    int inputCount, outputCount = 0;
+
+    public static int innovation = 0;
+
 
     public Genome(int inputSize, int outputSize, List<List<int>> connections) {
         // Add input nodes
         for (int i = 0; i < inputSize; i ++) {
-            inputNum++;
+            addNode(0);
+            inputCount++;
         }
         // Add output nodes
         for (int i = 0; i < outputSize; i ++) {
-            this.nodes.Add(new NodeGene(2, localNodes.Count));
-            outputNum++;
+            addNode(2);
+            outputCount++;
         }
         // Add initial connections
         for (int i = 0; i < connections.Count; i ++) {
@@ -30,8 +37,8 @@ public class Genome {
     private void addNode(int type) {
         localNodes.Add(new NodeGene(type, localNodes.Count));
         localConnections.Add(new List<ConnectionGene>());
-        for (int i = 0; i < localConnections[0].Count; i ++) {
-            localConnections[localConnections.Count].Add(null);
+        for (int i = 0; i < localNodes.Count; i ++) {
+            localConnections[localConnections.Count-1].Add(null);
         }
         for (int i = 0; i < localConnections.Count; i ++) {
             localConnections[i].Add(null);
@@ -39,27 +46,34 @@ public class Genome {
     }
 
     private bool checkConnection(int inNode, int outNode) {
-        if (localConnections[inNode][outNode] || localConnections[outNode][inNode]) {
+        if (localConnections[inNode][outNode] != null || localConnections[outNode][inNode] != null) {
             return false;
         }
+        return true;
     }
 
     private void addConnection(int inNode, int outNode, double weight) {
         if (checkConnection(inNode, outNode)) {
-            localConnections[inNode][outNode] = new ConnectionGene(inNode, outNode, weight, innovation);
+            localConnections[inNode][outNode] = new ConnectionGene(localNodes[inNode], localNodes[outNode], weight, innovation);
         }
     }
 
     //Make copy of connection list, with input connections set to true/completed and others set to false
     private void connectionsToBools(int testIn, int testOut) {
-        connectionsToBools = new List<List<bool?>>();
-        for (int i = 0; i < connections.Count; i ++) {
-            connectionsToBools.Add(new List<bool?>());
-            for (int j = 0; j < connections[i].Count; j ++) {
-                if (connections[i][j] != null) {
+        connectionsAsBools = new List<List<bool?>>();
+        for (int i = 0; i < localConnections.Count; i ++) {
+            connectionsAsBools.Add(new List<bool?>());
+            for (int j = 0; j < localConnections[i].Count; j ++) {
+                if (localConnections[i][j] != null) {
                     if (localNodes[i].getType() == 0) {
-                        connectionsAsBools[i][j]
+                        connectionsAsBools[i].Add(true);
                     }
+                    else {
+                        connectionsAsBools[i].Add(false);
+                    }
+                }
+                else {
+                    connectionsAsBools[i].Add(null);
                 }
             }
         }
