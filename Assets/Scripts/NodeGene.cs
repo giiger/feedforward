@@ -12,7 +12,6 @@ public class NodeGene
     public double value;
     public List<NodeGene> inputs = new List<NodeGene>();
     List<double> inputValues = new List<double>();
-
     public List<double> weights = new List<double>();
 
     public NodeGene(int nodeType, int id) {
