@@ -2,15 +2,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using System.Threading;
+using UnityEngine;
 
 
 public static class math
 {
     public static double E = 2.7182818284590451;
-    private static Random random = new Random();
+    private static System.Random random = new System.Random();
 
     public static double GetRandomDouble(double min, double max) {
-        return min + (random.NextDouble() * (max - min));
+        double rand =   min + (random.NextDouble() * (max - min));
+        Debug.Log("random: " + rand);
+        return rand;
     }
     public static List<double> arrSub(List<double> a, List<double> b) {
         List<double> c = new List<double>();

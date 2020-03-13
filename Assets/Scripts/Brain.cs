@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class Brain
 {
     int inputs = 2;
-    int outputs = 3;
+    int outputs = 1;
     // If some connections should exist before evolving, they may be initialized here
     List<List<int>> initialConnections = new List<List<int>> {
 
@@ -14,12 +14,15 @@ public class Brain
     Genome genome;
 
     public Brain(List<List<int>> initialConnections) {
-        genome = new Genome(inputs, outputs, initialConnections);
         this.initialConnections = initialConnections;
+        genome = new Genome(inputs, outputs, initialConnections);
     }
 
-    List<double> getOutput() {
-        List<double> output = genome.feedforward();
-        return output;
+    public void updateInput(List<double> input) {
+        genome.updateNetwork(input);
+    }
+
+    public List<double> getOutput() {
+        return genome.feedforward();
     }
 }

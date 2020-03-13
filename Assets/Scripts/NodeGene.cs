@@ -40,4 +40,9 @@ public class NodeGene
         done = true;
     }
 
+    public void clear() {
+        done = false;
+        inputValues = new List<double>();
+    }
+
 }

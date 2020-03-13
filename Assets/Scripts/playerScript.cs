@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class playerScript : MonoBehaviour
 {
+    Brain brain;
     public List<List<int>> initialConnections = new List<List<int>> {
         new List<int> {0,2},
-        new List<int> {0,3},
-        new List<int> {1,3},
-        new List<int> {1,4}
+        new List<int> {1,2},
     };
     void Awake() {
-        Brain brain = new Brain(initialConnections);
+        brain = new Brain(initialConnections);
+        brain.getOutput();
     }
 
     public List<double> getInput() {
@@ -19,5 +19,9 @@ public class playerScript : MonoBehaviour
             transform.position.x,
             transform.position.y
         };
+    }
+    void Update() {
+        brain.updateInput(getInput());
+        transform.Translate(Vector3.right * (float)brain.getOutput()[0]);
     }
 }

@@ -88,4 +88,12 @@ public class Genome {
         }
         return output;
     }
+    public void updateNetwork(List<double> input) {
+        for (int i = 0; i < localNodes.Count; i ++) {
+            localNodes[i].clear();
+            if (i < inputCount) {
+                localNodes[i].assignValue(input[i]);
+            }
+        }
+    }
 }
