@@ -13,7 +13,7 @@ public class Brain
     };
     Genome genome;
 
-    public Brain(List<List<int>> initialConnections) {
+    public Brain(int inputs, int outputs, List<List<int>> initialConnections=null) {
         this.initialConnections = initialConnections;
         genome = new Genome(inputs, outputs, initialConnections);
     }
