@@ -10,6 +10,9 @@
 #define Vector2D_hpp
 
 #include <stdio.h>
+#include <cmath>
+
+using namespace std;
 
 class Vector2D {
 public:
@@ -20,8 +23,10 @@ public:
     Vector2D(float, float);
     Vector2D(double, double);
     
-    Vector2D rotated(double angle);
-    void rotate(double angle);
+    Vector2D rotated(double);
+    Vector2D toUnit();
+    Vector2D scaled(double);
+    void rotate(double);
     
     Vector2D operator-();
     void operator+=(Vector2D&);
@@ -33,4 +38,17 @@ private:
     void updateCartesian();
     void updatePolar();
 };
+
+Vector2D operator+(Vector2D&, Vector2D&);
+
+Vector2D operator-(Vector2D&, Vector2D&);
+
+Vector2D operator*(Vector2D&, double&);
+
+Vector2D operator/(Vector2D&, double&);
+
+bool operator==(Vector2D&, Vector2D&);
+
+bool operator!=(Vector2D&, Vector2D&);
+
 #endif /* Vector2D_hpp */

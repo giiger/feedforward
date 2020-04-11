@@ -11,6 +11,9 @@
 
 using namespace std;
 
+
+#include "Vector2D.hpp"
+
 Vector2D::Vector2D(int x, int y) : x((float) x), y((float) y) {
     this->updatePolar();
 }
@@ -24,7 +27,7 @@ Vector2D::Vector2D(double theta, double magnitude) : theta(theta), magnitude(mag
 }
 
 Vector2D Vector2D::rotated(double angle) {
-    return Vector2D(theta + angle, magnitude);
+    return Vector2D((double) (theta + angle), (double) magnitude);
 }
 
 void Vector2D::rotate(double angle) {
@@ -32,24 +35,12 @@ void Vector2D::rotate(double angle) {
     this->updateCartesian();
 }
 
-Vector2D Vector2D::operator-() {
-    return Vector2D((float) -x,(float)  -y);
+Vector2D Vector2D::toUnit() {
+    return Vector2D((double) theta, (double) 1);
 }
 
-Vector2D operator+(Vector2D& v1, Vector2D& v2) {
-    return Vector2D((float) v1.x+v2.x, (float) v1.y+v2.y);
-}
-
-Vector2D operator-(Vector2D& v1, Vector2D& v2) {
-    return Vector2D((float) v1.x-v2.x, (float) v1.y-v2.y);
-}
-
-Vector2D operator*(Vector2D& v1, double& scalar) {
-    return Vector2D((double) v1.theta, (double) v1.magnitude * scalar);
-}
-
-Vector2D operator/(Vector2D& v1, double& scalar) {
-    return Vector2D((double) v1.theta, (double) v1.magnitude / scalar);
+Vector2D Vector2D::scaled(double k) {
+    return Vector2D((double) theta, (double) k);
 }
 
 void Vector2D::operator+=(Vector2D& other) {
@@ -79,4 +70,32 @@ void Vector2D::updateCartesian() {
 void Vector2D::updatePolar() {
     this->magnitude = sqrt(this->x * this->x + this->y * this->x);
     this->theta = atan2(this->y, this->x);
+}
+
+Vector2D Vector2D::operator-() {
+    return Vector2D((float) -x,(float)  -y);
+}
+
+Vector2D operator+(Vector2D& v1, Vector2D& v2) {
+    return Vector2D((float) v1.x+v2.x, (float) v1.y+v2.y);
+}
+
+Vector2D operator-(Vector2D& v1, Vector2D& v2) {
+    return Vector2D((float) v1.x-v2.x, (float) v1.y-v2.y);
+}
+
+Vector2D operator*(Vector2D& v1, double& scalar) {
+    return Vector2D((double) v1.theta, (double) v1.magnitude * scalar);
+}
+
+Vector2D operator/(Vector2D& v1, double& scalar) {
+    return Vector2D((double) v1.theta, (double) v1.magnitude / scalar);
+}
+
+bool operator==(Vector2D& v1, Vector2D& v2) {
+    return v1.x == v2.x && v1.y == v2.y;
+}
+
+bool operator!=(Vector2D& v1, Vector2D& v2) {
+    return v1.x != v2.x || v1.y != v2.y;
 }
